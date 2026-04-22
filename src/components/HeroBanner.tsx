@@ -1,26 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
-import heroBanner1 from "@/assets/hero-banner-1.jpg";
-import heroBanner2 from "@/assets/hero-banner-2.jpg";
-import heroBanner3 from "@/assets/hero-banner-3.jpg";
+import { Link } from "@tanstack/react-router";
+import heroCover from "@/assets/game-bubble-shooter.png";
+import heroMenu from "@/assets/bubble-shooter-menu.png";
+import heroGameplay from "@/assets/bubble-shooter-gameplay.png";
+import { games } from "@/lib/gameData";
+
+/** Featured hero game (first in catalog). */
+const game = games[0]!;
 
 const slides = [
   {
-    image: heroBanner1,
-    title: "Blast Zone",
-    subtitle: "Explosive multiplayer action awaits!",
-    badge: "⭐ Eros Play Original",
+    image: heroCover,
+    title: game.name,
+    subtitle: "Match colors, clear the board, and beat your high score — play free in your browser.",
+    badge: "✨ Now live",
   },
   {
-    image: heroBanner2,
-    title: "Turbo Drift",
-    subtitle: "Race, drift, and dominate the track!",
-    badge: "🔥 Top Rated",
+    image: heroMenu,
+    title: game.name,
+    subtitle: "Simple controls, relaxing flow, and levels that ramp up the challenge.",
+    badge: "🎮 Deployed on Eros Play",
   },
   {
-    image: heroBanner3,
-    title: "Gem Crush",
-    subtitle: "Match gems in a cosmic puzzle adventure!",
-    badge: "✨ New Release",
+    image: heroGameplay,
+    title: game.name,
+    subtitle: "Aim the cannon, plan your angles, and pop groups of three or more.",
+    badge: "⭐ Casual arcade",
   },
 ];
 
@@ -51,29 +56,29 @@ export function HeroBanner() {
             height={640}
             {...(i === 0 ? {} : { loading: "lazy" as const })}
           />
-          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
 
-          {/* Content */}
           <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-12 z-10">
             <span className="inline-block w-fit text-xs font-bold px-3 py-1 rounded-full btn-gradient text-white mb-3">
               {slide.badge}
             </span>
-            <h2 className="text-2xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">
-              {slide.title}
-            </h2>
+            <h2 className="text-2xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">{slide.title}</h2>
             <p className="text-sm md:text-lg text-white/80 mb-4 max-w-md">
               {slide.subtitle}
             </p>
-            <button className="btn-gradient w-fit px-6 py-2.5 rounded-full text-white font-bold text-sm hover:opacity-90 transition-opacity">
+            <Link
+              to="/game/$gameId"
+              params={{ gameId: game.slug }}
+              className="btn-gradient w-fit px-6 py-2.5 rounded-full text-white font-bold text-sm hover:opacity-90 transition-opacity inline-flex items-center justify-center"
+            >
               Play Now
-            </button>
+            </Link>
           </div>
         </div>
       ))}
 
-      {/* Nav arrows */}
       <button
+        type="button"
         onClick={prev}
         className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
         aria-label="Previous slide"
@@ -81,6 +86,7 @@ export function HeroBanner() {
         ‹
       </button>
       <button
+        type="button"
         onClick={next}
         className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
         aria-label="Next slide"
@@ -88,11 +94,11 @@ export function HeroBanner() {
         ›
       </button>
 
-      {/* Dots */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, i) => (
           <button
             key={i}
+            type="button"
             onClick={() => setCurrent(i)}
             className={`h-2 rounded-full transition-all duration-300 ${
               i === current ? "w-6 bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)]" : "w-2 bg-white/50"

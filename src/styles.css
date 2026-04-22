@@ -187,4 +187,18 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /** Sidebar shell — depth, neon edge, matches Eros Play gradients */
+  .sidebar-gaming {
+    background: linear-gradient(
+      168deg,
+      oklch(0.17 0.05 278) 0%,
+      var(--sidebar) 40%,
+      oklch(0.095 0.045 285) 100%
+    );
+    border-right: 1px solid color-mix(in oklch, white 9%, transparent);
+    box-shadow:
+      4px 0 40px -12px color-mix(in oklch, var(--gradient-end) 38%, transparent),
+      inset -1px 0 0 color-mix(in oklch, white 5%, transparent);
+  }
 }

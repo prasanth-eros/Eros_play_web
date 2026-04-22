@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GameGameIdRouteImport } from './routes/game.$gameId'
+import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as BrowseFilterRouteImport } from './routes/browse.$filter'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +24,48 @@ const GameGameIdRoute = GameGameIdRouteImport.update({
   path: '/game/$gameId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrowseFilterRoute = BrowseFilterRouteImport.update({
+  id: '/browse/$filter',
+  path: '/browse/$filter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/browse/$filter': typeof BrowseFilterRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/game/$gameId': typeof GameGameIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/browse/$filter': typeof BrowseFilterRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/game/$gameId': typeof GameGameIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/browse/$filter': typeof BrowseFilterRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/game/$gameId': typeof GameGameIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/game/$gameId'
+  fullPaths: '/' | '/browse/$filter' | '/category/$slug' | '/game/$gameId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/game/$gameId'
-  id: '__root__' | '/' | '/game/$gameId'
+  to: '/' | '/browse/$filter' | '/category/$slug' | '/game/$gameId'
+  id: '__root__' | '/' | '/browse/$filter' | '/category/$slug' | '/game/$gameId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BrowseFilterRoute: typeof BrowseFilterRoute
+  CategorySlugRoute: typeof CategorySlugRoute
   GameGameIdRoute: typeof GameGameIdRoute
 }
 
@@ -65,11 +85,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameGameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/browse/$filter': {
+      id: '/browse/$filter'
+      path: '/browse/$filter'
+      fullPath: '/browse/$filter'
+      preLoaderRoute: typeof BrowseFilterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BrowseFilterRoute: BrowseFilterRoute,
+  CategorySlugRoute: CategorySlugRoute,
   GameGameIdRoute: GameGameIdRoute,
 }
 export const routeTree = rootRouteImport

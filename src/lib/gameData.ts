@@ -1,83 +1,133 @@
-import gameBlastZone from "@/assets/game-blast-zone.jpg";
-import gameTurboDrift from "@/assets/game-turbo-drift.jpg";
-import gameGemCrush from "@/assets/game-gem-crush.jpg";
-import gameStarWars from "@/assets/game-star-wars.jpg";
-import gameDragonQuest from "@/assets/game-dragon-quest.jpg";
-import gameStickFight from "@/assets/game-stick-fight.jpg";
-import gameZombieSiege from "@/assets/game-zombie-siege.jpg";
-import gameGoalMaster from "@/assets/game-goal-master.jpg";
-import gameBlockCraft from "@/assets/game-block-craft.jpg";
-import gameDunkMasters from "@/assets/game-dunk-masters.jpg";
-import game8BallPool from "@/assets/game-8ball-pool.jpg";
-import gameTowerWars from "@/assets/game-tower-wars.jpg";
-import gameNinjaDash from "@/assets/game-ninja-dash.jpg";
-import gameSpaceBlitz from "@/assets/game-space-blitz.jpg";
-import gameCandyBlast from "@/assets/game-candy-blast.jpg";
-import gamePiratePlunder from "@/assets/game-pirate-plunder.jpg";
-import gameRobotRampage from "@/assets/game-robot-rampage.jpg";
-import gameIceClimber from "@/assets/game-ice-climber.jpg";
-import gameWordWizard from "@/assets/game-word-wizard.jpg";
-import gameMegaKart from "@/assets/game-mega-kart.jpg";
-import gameSlimeHop from "@/assets/game-slime-hop.jpg";
-import gameCastleSiege from "@/assets/game-castle-siege.jpg";
-import gameBubblePop from "@/assets/game-bubble-pop.jpg";
-import gameShadowStrike from "@/assets/game-shadow-strike.jpg";
+import gameBubbleShooter from "@/assets/game-bubble-shooter.png";
+import bubbleShooterMenu from "@/assets/bubble-shooter-menu.png";
+import bubbleShooterGameplay from "@/assets/bubble-shooter-gameplay.png";
+import gameDeepsea2048Cover from "@/assets/game-deepsea2048-cover.png";
+import deepsea2048Start from "@/assets/deepsea2048-start.png";
+import deepsea2048Gameplay from "@/assets/deepsea2048-gameplay.png";
+import type { GameRecord } from "@/lib/gameModel";
+import { racingLimitsGame } from "@/lib/racingLimitsGame";
 
-export type Badge = "originals" | "updated" | "top" | "new";
+export type { GameApiResponse, GameRecord, GameTagRef, GameCategoryRef } from "@/lib/gameModel";
+export { findGameByRouteId, metaDescriptionText, resolvePosterUrl, stripHtml } from "@/lib/gameModel";
 
-export interface Game {
-  id: string;
-  title: string;
-  image: string;
-  badge?: Badge;
-  category: string;
-  rating?: number;
+const bubbleShooterDescriptionHtml = [
+  "A Bubble Shooter game is a casual arcade-style game where the player aims and shoots colored bubbles to match and clear groups from the screen. The main objective is to eliminate all bubbles or achieve the highest score before the bubbles reach a certain limit.",
+  "In the game, a cannon or launcher is positioned at the bottom of the screen, allowing the player to shoot bubbles upward. When three or more bubbles of the same color connect, they burst and disappear, earning points. The gameplay requires precision, strategy, and planning, as players must carefully choose angles and rebounds to create effective matches.",
+  "As the levels progress, the difficulty increases with more complex bubble arrangements, limited shots, moving obstacles, or special bubbles such as bombs, rainbow bubbles, or blockers. The game often includes power-ups, combos, and scoring bonuses to enhance engagement.",
+  "Bubble Shooter games are known for their simple controls, addictive gameplay, and relaxing yet challenging experience, making them popular among players of all ages on mobile devices and web platforms.",
+]
+  .map((p) => `<p>${p}</p>`)
+  .join("");
+
+const bubbleShooterMeta =
+  "Play Bubble Shooter free on Eros Play — match colored bubbles, clear the board, and climb the levels. Casual arcade fun in your browser with no download.";
+
+const bubbleShooter: GameRecord = {
+  id: "bubble-shooter",
+  name: "Bubble Shooter",
+  slug: "bubble-shooter",
+  https: true,
+  rating: 9.0,
+  desktopUrl: "https://prasanth-eros.github.io/bubble_shooter/",
+  category: {
+    name: "Casual",
+    slug: "casual",
+    enSlug: "casual",
+    thumbnail: "",
+    gamesCount: 0,
+  },
+  tags: [
+    { name: "Puzzle", slug: "puzzle", enSlug: "puzzle", thumbnail: "", gamesCount: 0 },
+    { name: "Arcade", slug: "arcade", enSlug: "arcade", thumbnail: "", gamesCount: 0 },
+    { name: "HTML5", slug: "html5", enSlug: "html5", thumbnail: "", gamesCount: 0 },
+    { name: "Free", slug: "free", enSlug: "free", thumbnail: "", gamesCount: 0 },
+  ],
+  descriptionFirst: bubbleShooterDescriptionHtml,
+  descriptionRest: "",
+  metaDescription: bubbleShooterMeta,
+  developer: "Prasanth Eros",
+  technology: "HTML5",
+  orientation: "PORTRAIT",
+  gameThumbLabels: ["new"],
+  addedOn: "2026-04-22",
+  basicLaunchOn: "2026-04-22",
+  allowEmbed: true,
+  posterImage: gameBubbleShooter,
+  gameplayPreviews: [bubbleShooterMenu, bubbleShooterGameplay],
+  platformsDisplay: "Browser, Mobile, Tablet",
+};
+
+const deepSea2048DescriptionHtml = [
+  "<p><strong>Deep Sea</strong> is a 2048-style puzzle with an underwater twist. Slide numbered tiles on a grid to merge matching values—each merge doubles the tile and inches you closer to the highest numbers.</p>",
+  "<p>Press <strong>START</strong> to open the board, then use arrow keys or swipe to move tiles. Plan ahead: every move adds a new tile, so keep space to maneuver and beat your best score.</p>",
+  "<p>Track your score, moves, and ascent on the HUD. Use undo when you need a second chance, start fresh when you want a new run, and chase the calm, neon-deep-sea vibe while you climb the ladder.</p>",
+].join("");
+
+const deepSea2048Meta =
+  "Play Deep Sea 2048 free in your browser — merge tiles, climb the numbers, and beat your best score in this underwater 2048-style puzzle.";
+
+const deepSea2048: GameRecord = {
+  id: "deep-sea-2048",
+  name: "Deep Sea 2048",
+  slug: "deep-sea-2048",
+  https: true,
+  rating: 8.8,
+  desktopUrl: "https://abarna-eros.github.io/game-deepsea2048/",
+  category: {
+    name: "Puzzle",
+    slug: "puzzle",
+    enSlug: "puzzle",
+    thumbnail: "",
+    gamesCount: 0,
+  },
+  tags: [
+    { name: "2048", slug: "2048", enSlug: "2048", thumbnail: "", gamesCount: 0 },
+    { name: "Puzzle", slug: "puzzle", enSlug: "puzzle", thumbnail: "", gamesCount: 0 },
+    { name: "HTML5", slug: "html5", enSlug: "html5", thumbnail: "", gamesCount: 0 },
+    { name: "Casual", slug: "casual", enSlug: "casual", thumbnail: "", gamesCount: 0 },
+  ],
+  descriptionFirst: deepSea2048DescriptionHtml,
+  descriptionRest: "",
+  metaDescription: deepSea2048Meta,
+  developer: "Abarna Eros",
+  technology: "HTML5",
+  orientation: "PORTRAIT",
+  gameThumbLabels: ["new"],
+  addedOn: "2026-04-22",
+  basicLaunchOn: "2026-04-22",
+  allowEmbed: true,
+  posterImage: gameDeepsea2048Cover,
+  gameplayPreviews: [deepsea2048Start, deepsea2048Gameplay],
+  platformsDisplay: "Browser, Mobile, Tablet",
+};
+
+/** Deployed / catalog games (same shape as a CrazyGames-style `{ game }` payload). */
+export const games: GameRecord[] = [bubbleShooter, deepSea2048, racingLimitsGame];
+
+export interface CategoryNav {
+  name: string;
+  slug: string;
+  icon: string;
 }
 
-export const games: Game[] = [
-  { id: "1", title: "Blast Zone", image: gameBlastZone, badge: "originals", category: "Action", rating: 9.1 },
-  { id: "2", title: "Turbo Drift", image: gameTurboDrift, badge: "top", category: "Racing", rating: 8.7 },
-  { id: "3", title: "Gem Crush", image: gameGemCrush, badge: "updated", category: "Puzzle", rating: 8.4 },
-  { id: "4", title: "Star Wars IO", image: gameStarWars, badge: "originals", category: "Shooting", rating: 9.3 },
-  { id: "5", title: "Dragon Quest", image: gameDragonQuest, category: "Adventure", rating: 8.9 },
-  { id: "6", title: "Stick Fight", image: gameStickFight, badge: "new", category: "Fighting", rating: 8.2 },
-  { id: "7", title: "Zombie Siege", image: gameZombieSiege, badge: "updated", category: "Horror", rating: 8.6 },
-  { id: "8", title: "Goal Master", image: gameGoalMaster, badge: "top", category: "Sports", rating: 8.8 },
-  { id: "9", title: "Block Craft", image: gameBlockCraft, category: "Sandbox", rating: 9.0 },
-  { id: "10", title: "Dunk Masters", image: gameDunkMasters, badge: "new", category: "Basketball", rating: 8.5 },
-  { id: "11", title: "8 Ball Pool", image: game8BallPool, badge: "originals", category: "Pool", rating: 8.7 },
-  { id: "12", title: "Tower Wars", image: gameTowerWars, badge: "updated", category: "Strategy", rating: 8.3 },
-  { id: "13", title: "Ninja Dash", image: gameNinjaDash, badge: "new", category: "Action", rating: 8.8 },
-  { id: "14", title: "Space Blitz", image: gameSpaceBlitz, badge: "top", category: "Shooting", rating: 9.0 },
-  { id: "15", title: "Candy Blast", image: gameCandyBlast, badge: "originals", category: "Puzzle", rating: 8.5 },
-  { id: "16", title: "Pirate Plunder", image: gamePiratePlunder, category: "Adventure", rating: 8.7 },
-  { id: "17", title: "Robot Rampage", image: gameRobotRampage, badge: "updated", category: "Action", rating: 8.9 },
-  { id: "18", title: "Ice Climber", image: gameIceClimber, badge: "new", category: "Adventure", rating: 8.3 },
-  { id: "19", title: "Word Wizard", image: gameWordWizard, category: "Puzzle", rating: 8.1 },
-  { id: "20", title: "Mega Kart", image: gameMegaKart, badge: "top", category: "Racing", rating: 9.2 },
-  { id: "21", title: "Slime Hop", image: gameSlimeHop, badge: "originals", category: "Casual", rating: 8.4 },
-  { id: "22", title: "Castle Siege", image: gameCastleSiege, badge: "updated", category: "Strategy", rating: 8.6 },
-  { id: "23", title: "Bubble Pop", image: gameBubblePop, category: "Casual", rating: 8.0 },
-  { id: "24", title: "Shadow Strike", image: gameShadowStrike, badge: "new", category: "Fighting", rating: 9.1 },
-];
-
-export const categories = [
-  { name: "Action", icon: "⚔️" },
-  { name: "Adventure", icon: "🗺️" },
-  { name: "Basketball", icon: "🏀" },
-  { name: "Racing", icon: "🏎️" },
-  { name: "Shooting", icon: "🔫" },
-  { name: "Puzzle", icon: "🧩" },
-  { name: "Sports", icon: "⚽" },
-  { name: "Fighting", icon: "🥊" },
-  { name: "Horror", icon: "👻" },
-  { name: "Sandbox", icon: "🧱" },
-  { name: "Strategy", icon: "♟️" },
-  { name: "Pool", icon: "🎱" },
-  { name: "Casual", icon: "🎮" },
-  { name: "Multiplayer", icon: "👥" },
-  { name: "Clicker", icon: "👆" },
-  { name: "Driving", icon: "🚗" },
-  { name: "Stickman", icon: "🏃" },
-  { name: "Tower Defense", icon: "🏰" },
+/** Sidebar category links — `slug` matches `GameRecord.category.slug` when present in the catalog. */
+export const categories: CategoryNav[] = [
+  { name: "Action", slug: "action", icon: "⚔️" },
+  { name: "Adventure", slug: "adventure", icon: "🗺️" },
+  { name: "Basketball", slug: "basketball", icon: "🏀" },
+  { name: "Racing", slug: "racing", icon: "🏎️" },
+  { name: "Shooting", slug: "shooting", icon: "🔫" },
+  { name: "Puzzle", slug: "puzzle", icon: "🧩" },
+  { name: "Sports", slug: "sports", icon: "⚽" },
+  { name: "Fighting", slug: "fighting", icon: "🥊" },
+  { name: "Horror", slug: "horror", icon: "👻" },
+  { name: "Sandbox", slug: "sandbox", icon: "🧱" },
+  { name: "Strategy", slug: "strategy", icon: "♟️" },
+  { name: "Pool", slug: "pool", icon: "🎱" },
+  { name: "Casual", slug: "casual", icon: "🎮" },
+  { name: "Multiplayer", slug: "multiplayer", icon: "👥" },
+  { name: "Clicker", slug: "clicker", icon: "👆" },
+  { name: "Driving", slug: "driving", icon: "🚗" },
+  { name: "Stickman", slug: "stickman", icon: "🏃" },
+  { name: "Tower Defense", slug: "tower-defense", icon: "🏰" },
 ];
